@@ -99,16 +99,16 @@ class ProcessReplyMsg:
         Classifying operation type. ie. Add,Modify,Delete...etc
         :param text: raw data send to this Bot
         """
-        # if '.add' in text:
-        #     process.addPrepare(text)
-        # elif '.mod' in text:
-        #     process.modify(text)
-        # elif '.del' in text:
-        #     process.delete(text)
-        # elif 'check schedule' in text:
-        #     pass
-        # else:
-        #     pass
+        if '.add' in text:
+            process.addPrepare(text)
+        elif '.mod' in text:
+            process.modify(text)
+        elif '.del' in text:
+            process.delete(text)
+        elif 'check schedule' in text:
+            pass
+        else:
+            pass
 
     def addPrepare(self, text):
         #shori
@@ -182,17 +182,18 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # # SQLから来たのを分解後
-    # # message = Data("das08")
-    # # message.add("月1","assignment",103119,"線形台数レポート")
-    #
-    # process = ProcessReplyMsg("das08")
-    # process.add("月1", "assignment", 100119, "線形台数レポート")
-    # process.add("月2", "memo", 103119, "明日は雨")
-    # process.display()
+    # SQLから来たのを分解後
+    # message = Data("das08")
+    # message.add("月1","assignment",103119,"線形台数レポート")
+    uid=line_bot_api.get_profile(user_id)
+
+    process = ProcessReplyMsg("das08")
+    process.add("月1", "assignment", 100119, "線形台数レポート")
+    process.add("月2", "memo", 103119, "明日は雨")
+    process.display()
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="ok"))
+        TextSendMessage(text=uid.user_id))
 
 if __name__ == "__main__":
     #    app.run()
